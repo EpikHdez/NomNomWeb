@@ -1,0 +1,2 @@
+module DashboardPlaceTypeHelper
+end

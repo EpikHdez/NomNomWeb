@@ -1,0 +1,74 @@
+I"l(function() {
+  var root;
+
+  root = typeof exports !== "undefined" && exports !== null ? exports : this;
+
+  root.editNews = function(id, title, body) {
+    return swal({
+      title: 'Editar Noticia',
+      html: '<label>Titulo</label><input type="text" id="newsNewTitle" class="swal2-input" value="' + title + '">' + '<label>Cuerpo</label><textarea id="newsNewBody" class="swal2-input" value="' + body + '">' + '<br>',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Guardar',
+      preConfirm: function() {
+        return new Promise(function(resolve) {
+          return resolve({
+            title: $('#newsNewTitle').val(),
+            body: $('#newsNewBody').val()
+          });
+        });
+      }
+    }).then(function(result) {
+      var jsonNews, values;
+      if (result.dismiss) {
+        return;
+      }
+      values = result.value;
+      jsonNews = {
+        news: values
+      };
+      return $.ajax('http://localhost:3000/dashboard_news/' + id, {
+        type: 'put',
+        dataType: 'json',
+        data: jsonNews,
+        success: function(response) {
+          return swal("Se ha editado la noticia.", "", "success").then(function(result) {
+            return location.reload();
+          });
+        },
+        error: function(error) {
+          return console.log(error);
+        }
+      });
+    });
+  };
+
+  root.deleteNews = function(id) {
+    return swal({
+      title: "¿Eliminar noticia?",
+      text: "No prodrá deshacer esta acción.",
+      type: "warning",
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Eliminar',
+      confirmButtonColor: '#D03B3B'
+    }).then(function(result) {
+      if (result.dismiss) {
+        return;
+      }
+      return $.ajax('http://localhost:3000/dashboard_news/' + id, {
+        type: 'delete',
+        success: function(response) {
+          return swal("Se ha elimado la noticia.", "", "success").then(function(result) {
+            return location.reload();
+          });
+        },
+        error: function(error) {
+          return console.log(error);
+        }
+      });
+    });
+  };
+
+}).call(this);
+:ET

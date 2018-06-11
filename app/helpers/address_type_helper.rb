@@ -1,0 +1,2 @@
+module AddressTypeHelper
+end

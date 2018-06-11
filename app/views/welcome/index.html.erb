@@ -1,0 +1,49 @@
+<% content_for :css do %>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<% end %>
+
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-form-title">
+        <span class="login100-form-title-1">
+          Iniciar sesión
+        </span>
+      </div>
+
+      <% if @error %>
+        <div class="alert alert-danger">
+          <%= @error %>
+        </div>
+      <% end %>
+
+      <form class="login100-form validate-form" action="/" method="post">
+        <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
+          <span class="label-input100">Correo electrónico</span>
+          <input class="input100" type="email" name="email">
+          <span class="focus-input100"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+          <span class="label-input100">Constraseña</span>
+          <input class="input100" type="password" name="password">
+          <span class="focus-input100"></span>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn" type="submit">
+            Ingresar
+          </button>
+        </div>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      </form>
+    </div>
+  </div>
+</div>
+
+<% content_for :js do %>
+  <script src="js/main.js"></script>
+<% end %>
